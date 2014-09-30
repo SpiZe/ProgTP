@@ -1,5 +1,6 @@
 package Models;
 
-public class Token {
+public class Token 
+{
 
 }
