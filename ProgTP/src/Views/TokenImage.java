@@ -1,5 +1,6 @@
 package Views;
 
-public class TokenImage {
-
+public class TokenImage 
+{
+	
 }
