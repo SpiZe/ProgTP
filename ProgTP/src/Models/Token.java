@@ -6,8 +6,8 @@ public class Token {
 		Player1, Player2, Empty
 	}
 	private int posY; 
-	private String imgPath; 
 	private int posX;
+	private String imgPath; 
 	private Status tokenStatus; 
 	
 	public int getPosX() {
@@ -41,7 +41,4 @@ public class Token {
 	public void setTokenStatus(Status tokenStatus) {
 		this.tokenStatus = tokenStatus;
 	}
-	
-	
-	
 }
