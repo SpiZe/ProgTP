@@ -1,5 +1,6 @@
 package Views;
 
+import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -8,16 +9,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Controllers.GameController;
+import Models.Token;
 
 public class GameView extends JFrame implements Observer
 {
+	private Token token;
 	private GameController controller;
 	//private Model model;
 	private int nbRangees;
 	private int nbColonnes;
 	private JPanel jPanel;
+	private GridLayout grid;
 	
-	GameView(GameController controller) 
+	GameView(GameController controller, Token token) 
 	{
 		InputBoardSize();
 		
@@ -27,7 +31,7 @@ public class GameView extends JFrame implements Observer
 	
 	private void InputBoardSize()
 	{
-		String input = JOptionPane.showInputDialog("Nombre de bouton");
+		String input = JOptionPane.showInputDialog("Nombre de rangées");
 		try 
 		{
 			if (input == null) 
@@ -41,7 +45,7 @@ public class GameView extends JFrame implements Observer
 			e.printStackTrace();
 		}
 		
-		input = JOptionPane.showInputDialog("Nombre de bouton");
+		input = JOptionPane.showInputDialog("Nombre de colonnes");
 		try 
 		{
 			if (input == null) 
@@ -59,6 +63,18 @@ public class GameView extends JFrame implements Observer
 	private void InitWindow()
 	{
 		
+	}
+	
+	private void InitGrid()
+	{
+		this.grid = new GridLayout(this.nbRangees, this.nbColonnes);
+		this.jPanel.setLayout(grid);
+		int nbOfElements = this.nbRangees*this.nbColonnes;
+		
+		for (int i = 0; i < nbOfElements; i++)
+		{
+			
+		}
 	}
 	
 	@Override
