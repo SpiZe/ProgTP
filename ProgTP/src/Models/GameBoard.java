@@ -32,4 +32,17 @@ public class GameBoard
 			board.add(new Stack<Token>());
 		}
 	}
+	
+	public boolean add(int columIdToPushOn, Token tokenToPush)
+	{
+		boolean isPossible = true;
+		
+		if(board.get(columIdToPushOn).size() == rowNb)
+		{
+			isPossible = false;
+		}
+		
+		board.get(columIdToPushOn).push(tokenToPush);
+		return isPossible;
+	}
 }
