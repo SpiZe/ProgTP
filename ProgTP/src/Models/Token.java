@@ -2,7 +2,7 @@ package Models;
 
 public class Token 
 {
-	private enum Status
+	public enum Status
 	{
 		Player1, Player2
 	}

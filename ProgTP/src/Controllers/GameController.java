@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.GameBoard;
 import Models.Token;
+import Models.Token.Status;
 import Views.View;
 
 public class GameController 
@@ -51,11 +52,28 @@ public class GameController
 		return isPossible;		
 	}
 	
-	public boolean isGameWon(int i, int j)
+	public boolean isGameWon(int rowId, int colId)
 	{
 		int comboCounter = 1;
 		
-
+		Status currentPlayerStatus = gameBoard.getBoardColumn(colId).get(rowId).getTokenStatus();
+		
+		for(int i = -1; i < 1; i++)
+		{
+			for(int j = -1; i < 1; i++)
+			{
+				if(gameBoard.getBoardColumn(colId+i).get(rowId+j).getTokenStatus()== currentPlayerStatus)
+				{
+					int currentRow = rowId+j;
+					int currentCol = colId+i;
+					
+					//for()
+					//{
+						
+					//}
+				}
+			}
+		}
 		
 		return false;
 	}
