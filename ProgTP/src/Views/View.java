@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -16,6 +17,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import Controllers.GameController;
 
 public class View extends JFrame
 {
@@ -29,9 +32,16 @@ public class View extends JFrame
 
 	private final JTextField message = new JTextField(20);
 	private final JPanel centerPane = new JPanel();
+	
+	private GameController controller;
 
-	private View()
+	public View(GameController controller)
 	{
+		this.controller = controller;
+		
+		askDimension();
+
+
 		this.setTitle("Connect4");
 
 		this.configureWindow();
@@ -65,8 +75,8 @@ public class View extends JFrame
 		this.setJMenuBar(menuBar);
 	}
 
-	private void initBoard(int nbRows, int nbColumns)
-	{
+	public void initBoard(int nbRows, int nbColumns)
+	{		
 		this.centerPane.removeAll();
 		this.placeHolders = new MyImageContainer[nbRows][nbColumns];
 		this.controlButtons = new JButton[nbColumns];
@@ -88,6 +98,7 @@ public class View extends JFrame
 				MyImageContainer button = new MyImageContainer();
 				button.setOpaque(true);
 				placeHolders[row][column] = button;
+				button.setImageIcon(new ImageIcon("src/Images/empty.jpg"));
 				centerPane.add(button);
 			}
 		}
@@ -118,6 +129,8 @@ public class View extends JFrame
 		public void actionPerformed(ActionEvent arg0)
 		{
 			System.out.println("Action on button: " + columnIndex);
+			
+			controller.add(columnIndex);
 		}
 	}
 
@@ -139,11 +152,62 @@ public class View extends JFrame
 		}
 	}
 
-	public static void main(String[] args)
+	
+	private void askDimension()
 	{
-		// test
-		View view = new View();
-		view.initBoard(6, 7);
+		String input = JOptionPane.showInputDialog("Nombre de rangées");
+		try
+		{
+			if (input != null)
+			{
+				controller.setNbRow(Integer.parseInt(input));
+			}			
+		}
+		catch (NumberFormatException e)
+		{
+			e.printStackTrace();
+		}
+
+		input = JOptionPane.showInputDialog("Nombre de colonnes");
+		try
+		{
+			if (input != null)
+			{
+				controller.setNbColumns(Integer.parseInt(input));
+			}
+			
+		}
+		catch (NumberFormatException e)
+		{
+			e.printStackTrace();
+		}
+		
+		input = JOptionPane.showInputDialog("Nombre de jeton en ligne pour gagner");
+		try
+		{
+			if (input != null)
+			{
+				controller.setNbTokenToWin(Integer.parseInt(input));
+			}
+			
+		}
+		catch (NumberFormatException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void UpdateToken(int i, int j, boolean isPlayer1) 
+	{
+		if(isPlayer1)
+		{
+			placeHolders[i][j].setImageIcon(new ImageIcon("src/Images/shrek.jpg"));
+		}
+		else
+		{
+			placeHolders[i][j].setImageIcon(new ImageIcon("src/Images/nicolas.jpg"));
+		}
+		
 	}
 
 }
