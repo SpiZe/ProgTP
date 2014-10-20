@@ -34,7 +34,10 @@ public class GameController
 			
 			gameView.UpdateToken(gameBoard.getBoardColumn(columnIndex).size()-1, columnIndex, isPlayer1);
 			
-			isGameWon(gameBoard.getBoardColumn(columnIndex).size()-1, columnIndex);
+			if(isGameWon(gameBoard.getBoardColumn(columnIndex).size()-1, columnIndex))
+			{
+				System.out.println("Partie gagnée par " + isPlayer1);
+			}
 			
 			isPlayer1 = !isPlayer1;
 		}
@@ -62,19 +65,41 @@ public class GameController
 		{
 			for(int j = -1; i < 1; i++)
 			{
-				if(gameBoard.getBoardColumn(colId+i).get(rowId+j).getTokenStatus()== currentPlayerStatus)
+				if(i != 0 && j != 0)
 				{
-					int currentRow = rowId+j;
-					int currentCol = colId+i;
-					
-					//for()
-					//{
+					if((colId+i > -1 && colId+i < this.colNb)
+					|| (rowId+j > -1 && rowId+j < this.rowNb))
+					{				
+						Status tokenAroundStatus = gameBoard.getBoardColumn(colId+i).get(rowId+j).getTokenStatus();
 						
-					//}
+						if(tokenAroundStatus == currentPlayerStatus)
+						{
+							int currentRow = rowId+j;
+							int currentCol = colId+i;
+							
+							for(int k = 0; k < this.numberOfTokenForVictory; k++)
+							{
+								Status nextTokenStatus = gameBoard.getBoardColumn(currentCol+i).get(currentRow+j).getTokenStatus();
+								
+								if(nextTokenStatus == currentPlayerStatus)
+								{
+									comboCounter++;
+								}
+								else
+								{
+									break;
+								}
+							}
+							
+							if(comboCounter == this.numberOfTokenForVictory)
+							{
+								return true;
+							}
+						}
+					}
 				}
 			}
-		}
-		
+		}		
 		return false;
 	}
 
