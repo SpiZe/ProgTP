@@ -36,12 +36,30 @@ public class GameController
 			
 			if(isGameWon(gameBoard.getBoardColumn(columnIndex).size()-1, columnIndex))
 			{
+				String winner = "";
+				if (isPlayer1)
+				{
+					winner = "Shrek";
+				}
+				else
+				{
+					winner = "Nicolas Cage";
+				}
+				gameView.GameIsWon(winner);
 				System.out.println("Partie gagnée par " + isPlayer1);
 			}
 			
 			isPlayer1 = !isPlayer1;
 		}
 		
+	}
+	
+	public void reset()
+	{
+		isPlayer1 = true;
+		gameView.Reset();
+		gameView.initBoard(rowNb, colNb);
+		gameBoard = new GameBoard(colNb);
 	}
 	
 	public boolean isAddPossible(int columnId)
@@ -57,49 +75,180 @@ public class GameController
 	
 	public boolean isGameWon(int rowId, int colId)
 	{
-		int comboCounter = 1;
 		
 		Status currentPlayerStatus = gameBoard.getBoardColumn(colId).get(rowId).getTokenStatus();
 		
-		for(int i = -1; i < 1; i++)
+		if (CheckVertical(rowId, colId, currentPlayerStatus) || CheckHorizontal(rowId, colId, currentPlayerStatus) || CheckDiagonalTopToBottom(rowId, colId, currentPlayerStatus) || CheckDiagonalBottomToTop(rowId, colId, currentPlayerStatus))
 		{
-			for(int j = -1; i < 1; i++)
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private boolean CheckDiagonalBottomToTop(int rowId, int colId, Status currentPlayerStatus)
+	{
+		int combo = 1;
+		int o = colId + 1;
+		//Haut droite
+		for (int i = rowId + 1; i >= rowId - this.numberOfTokenForVictory; i++)
+		{
+			try
 			{
-				if(i != 0 && j != 0)
+				if (currentPlayerStatus == gameBoard.getBoardColumn(o).get(i).getTokenStatus())
 				{
-					if((colId+i > -1 && colId+i < this.colNb)
-					|| (rowId+j > -1 && rowId+j < this.rowNb))
-					{				
-						Status tokenAroundStatus = gameBoard.getBoardColumn(colId+i).get(rowId+j).getTokenStatus();
-						
-						if(tokenAroundStatus == currentPlayerStatus)
-						{
-							int currentRow = rowId+j;
-							int currentCol = colId+i;
-							
-							for(int k = 0; k < this.numberOfTokenForVictory; k++)
-							{
-								Status nextTokenStatus = gameBoard.getBoardColumn(currentCol+i).get(currentRow+j).getTokenStatus();
-								
-								if(nextTokenStatus == currentPlayerStatus)
-								{
-									comboCounter++;
-								}
-								else
-								{
-									break;
-								}
-							}
-							
-							if(comboCounter == this.numberOfTokenForVictory)
-							{
-								return true;
-							}
-						}
+					combo++;
+					if (combo >= this.numberOfTokenForVictory)
+					{
+						return true;
 					}
 				}
 			}
-		}		
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				break;
+			}
+			o++;
+		}
+		
+		o = colId - 1;
+		//Bas droit
+		for (int i = rowId - 1; i <= rowId + this.numberOfTokenForVictory; i--)
+		{
+			try
+			{
+				if (currentPlayerStatus == gameBoard.getBoardColumn(o).get(i).getTokenStatus())
+				{
+					combo++;
+					if (combo >= this.numberOfTokenForVictory)
+					{
+						return true;
+					}
+				}
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				break;
+			}
+			o--;
+		}
+		return false;
+	}
+	
+	private boolean CheckDiagonalTopToBottom(int rowId, int colId, Status currentPlayerStatus)
+	{
+		int combo = 1;
+		int o = colId - 1;
+		//Haut gauche
+		for (int i = rowId + 1; i >= rowId - this.numberOfTokenForVictory; i++)
+		{
+			try
+			{
+				if (currentPlayerStatus == gameBoard.getBoardColumn(o).get(i).getTokenStatus())
+				{
+					combo++;
+					if (combo >= this.numberOfTokenForVictory)
+					{
+						return true;
+					}
+				}
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				break;
+			}
+			o--;
+		}
+		
+		o = colId + 1;
+		//Bas droit
+		for (int i = rowId - 1; i <= rowId + this.numberOfTokenForVictory; i--)
+		{
+			try
+			{
+				if (currentPlayerStatus == gameBoard.getBoardColumn(o).get(i).getTokenStatus())
+				{
+					combo++;
+					if (combo >= this.numberOfTokenForVictory)
+					{
+						return true;
+					}
+				}
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				break;
+			}
+			o++;
+		}
+		return false;
+	}
+	
+	private boolean CheckHorizontal(int rowId, int colId, Status currentPlayerStatus)
+	{
+		int combo = 1;
+		
+		//Gauche
+		for (int i = colId-1; i >= colId - this.numberOfTokenForVictory; i--)
+		{
+			try
+			{
+				if (currentPlayerStatus == gameBoard.getBoardColumn(i).get(rowId).getTokenStatus())
+				{
+					combo++;
+					if (combo >= this.numberOfTokenForVictory)
+					{
+						return true;
+					}
+				}
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				break;
+			}
+		}
+		
+		//droite
+		for (int i = colId + 1; i <= colId + this.numberOfTokenForVictory; i++)
+		{
+			try
+			{
+				if (currentPlayerStatus == gameBoard.getBoardColumn(i).get(rowId).getTokenStatus())
+				{
+					combo++;
+					if (combo >= this.numberOfTokenForVictory)
+					{
+						return true;
+					}
+				}
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				break;
+			}
+		}
+		return false;
+	}
+	
+	private boolean CheckVertical(int rowId, int colId, Status currentPlayerStatus)
+	{
+		int combo = 0;
+		
+		for (int i = rowId; i >= 0; i--)
+		{
+			if (currentPlayerStatus == gameBoard.getBoardColumn(colId).get(i).getTokenStatus())
+			{
+				combo++;
+				if (combo >= this.numberOfTokenForVictory)
+				{
+					return true;
+				}
+			}
+			if (i <= rowId - this.numberOfTokenForVictory)
+			{
+				return false;
+			}
+		}
 		return false;
 	}
 

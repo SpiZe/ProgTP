@@ -57,13 +57,32 @@ public class View extends JFrame
 		this.setVisible(true);
 	}
 
+	public void Reset()
+	{
+		askDimension();
+	}
+	
+	public void GameIsWon(String winner)
+	{
+		String message = winner + " a gagné! Voulez vous rejouer?";
+		int reply = JOptionPane.showConfirmDialog(null, message, "Félicitations", JOptionPane.YES_NO_OPTION);
+	    if (reply == JOptionPane.NO_OPTION)
+	    {
+	      System.exit(0);
+	    }
+	    if (reply == JOptionPane.YES_OPTION)
+	    {
+	    	controller.reset();
+	    }
+	}
+
 	private void createMenu()
 	{
 		JMenuBar menuBar = new JMenuBar();
 		JMenu gameMenu = new JMenu("Game");
-		JMenuItem resignMenuItem = new JMenuItem("Resign");
-		resignMenuItem.addActionListener(new ResignActionHandler());
-		gameMenu.add(resignMenuItem);
+		JMenuItem resetMenuItem = new JMenuItem("Reset");
+		resetMenuItem.addActionListener(new ResetActionHandler());
+		gameMenu.add(resetMenuItem);
 		menuBar.add(gameMenu);
 
 		JMenu helpMenu = new JMenu("Help");
@@ -134,11 +153,12 @@ public class View extends JFrame
 		}
 	}
 
-	private class ResignActionHandler implements ActionListener
+	private class ResetActionHandler implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
+			controller.reset();
 			System.out.println("Action on menu");
 		}
 	}

@@ -23,6 +23,10 @@ public class GameBoard
 
 	public Stack<Token> getBoardColumn(int id) 
 	{
+		if (id >= board.size())
+		{
+			throw new ArrayIndexOutOfBoundsException();
+		}
 		return board.get(id);
 	}
 	
