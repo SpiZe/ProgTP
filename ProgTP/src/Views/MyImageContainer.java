@@ -8,6 +8,11 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+/**
+ * 
+ * @author Olivier, Keven, Samuel
+ *
+ */
 public class MyImageContainer extends JLabel
 {
 

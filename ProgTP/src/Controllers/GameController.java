@@ -24,7 +24,10 @@ public class GameController
 		
 		gameBoard = new GameBoard(colNb);
 	}
-
+	/**
+	 * Ajoute un jeton dans la colonne spécifié.
+	 * @param columnIndex l'index de la colonne où il faut ajouter le jeton.
+	 */
 	public void add(int columnIndex) 
 	{		
 		if(isAddPossible(columnIndex))
@@ -53,7 +56,9 @@ public class GameController
 		}
 		
 	}
-	
+	/**
+	 * Appel les fonctions nécessaire pour réinitialiser la partie
+	 */
 	public void reset()
 	{
 		isPlayer1 = true;
@@ -61,7 +66,11 @@ public class GameController
 		gameView.initBoard(rowNb, colNb);
 		gameBoard = new GameBoard(colNb);
 	}
-	
+	/**
+	 * Vérifie s'il est possible d'ajouter un jeton dans la colonne spécifié.
+	 * @param columnId L'Id de la colonne 
+	 * @return boolean Si c'est possible ou pas. 
+	 */
 	public boolean isAddPossible(int columnId)
 	{
 		boolean isPossible = true;
@@ -72,7 +81,12 @@ public class GameController
 		}
 		return isPossible;		
 	}
-	
+	/**
+	 * Vérifie si le joueur à gagnée la partie. 
+	 * @param rowId L'Id de la rangée.
+	 * @param colId L'Id de la colonne.
+	 * @return Boolean, Si le joueur qui a jouer a gagner
+	 */
 	public boolean isGameWon(int rowId, int colId)
 	{
 		
@@ -85,7 +99,13 @@ public class GameController
 		
 		return false;
 	}
-	
+	/**
+	 * Regarde si la partie est gagné.
+	 * @param rowId L'Id de la rangée.
+	 * @param colId L'Id de la colonne.
+	 * @param currentPlayerStatus Le status du joueur qui a jouer le coup.
+	 * @return Si le joueur gagne
+	 */
 	private boolean CheckDiagonalBottomToTop(int rowId, int colId, Status currentPlayerStatus)
 	{
 		int combo = 1;
@@ -134,7 +154,13 @@ public class GameController
 		}
 		return false;
 	}
-	
+	/**
+	 * Regarde si la partie est gagné.
+	 * @param rowId L'Id de la rangée.
+	 * @param colId L'Id de la colonne.
+	 * @param currentPlayerStatus Le status du joueur qui a jouer le coup.
+	 * @return Si le joueur gagne
+	 */
 	private boolean CheckDiagonalTopToBottom(int rowId, int colId, Status currentPlayerStatus)
 	{
 		int combo = 1;
@@ -183,7 +209,13 @@ public class GameController
 		}
 		return false;
 	}
-	
+	/**
+	 * Regarde si la partie est gagné.
+	 * @param rowId L'Id de la rangée.
+	 * @param colId L'Id de la colonne.
+	 * @param currentPlayerStatus Le status du joueur qui a jouer le coup.
+	 * @return Si le joueur gagne
+	 */
 	private boolean CheckHorizontal(int rowId, int colId, Status currentPlayerStatus)
 	{
 		int combo = 1;
@@ -229,7 +261,13 @@ public class GameController
 		}
 		return false;
 	}
-	
+	/**
+	 * Regarde si la partie est gagné.
+	 * @param rowId L'Id de la rangée.
+	 * @param colId L'Id de la colonne.
+	 * @param currentPlayerStatus Le status du joueur qui a jouer le coup.
+	 * @return Si le joueur gagne
+	 */
 	private boolean CheckVertical(int rowId, int colId, Status currentPlayerStatus)
 	{
 		int combo = 0;
@@ -252,31 +290,50 @@ public class GameController
 		return false;
 	}
 
+	/**
+	 * Permet de régler le nombre de rangées de la grille
+	 * @param nbRows le nombre de rangées de la grille.
+	 */
 	public void setNbRow(int nbRows) 
 	{
 		this.rowNb = nbRows;
 	}
-	
+	/**
+	 * Permet de régler le nombre de colonnes de la grille
+	 * @param nbColumns le nombre de colonnes de la grille
+	 */
 	public void setNbColumns(int nbColumns) 
 	{
 		this.colNb = nbColumns;
 	}
-	
+	/**
+	 * Permet de régler le nombre de Token nécessaire pour gagner la partie.
+	 * @param nbTokenToWin le nombre Token
+	 */
 	public void setNbTokenToWin(int nbTokenToWin) 
 	{
 		this.numberOfTokenForVictory = nbTokenToWin;
 	}	
-
+/**
+ * Retourne le nombre de rangée de la grille 
+ * @return Le nombre de rangées de la grille
+ */
 	public int getNbRows() 
 	{
 		return this.rowNb;
 	}
-	
+	/**
+	 * Retourne le nombre de colonnes de la grille 
+	 * @return le nombre de colonnes de la grille
+	 */
 	public int getNbCols() 
 	{
 		return this.colNb;
 	}
-	
+	/**
+	 * Main de l'application
+	 * @param args 
+	 */
 	public static void main(String[] args)
 	{
 		int i = 0;

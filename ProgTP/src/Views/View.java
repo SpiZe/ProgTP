@@ -19,7 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Controllers.GameController;
-
+/**
+ * 
+ * @author Keven, Olivier, Samuel
+ *
+ */
 public class View extends JFrame
 {
 	private static final String IMAGE_PATH = "./IMAGES/Connect4/";
@@ -35,6 +39,10 @@ public class View extends JFrame
 	
 	private GameController controller;
 
+	/**
+	 * 
+	 * @param controller Le GameController de l'application est pasé à la vue pour lui indiquer quoi afficher.
+	 */
 	public View(GameController controller)
 	{
 		this.controller = controller;
@@ -56,12 +64,18 @@ public class View extends JFrame
 		this.createMenu();
 		this.setVisible(true);
 	}
-
+	/**
+	 * Fonction appelé lorsque la partie fini et que l'utilisateur veut rejouer.
+	 */
 	public void Reset()
 	{
 		askDimension();
 	}
 	
+	/**
+	 * Demande à l'utilisateur s'il veut refaire une partie.
+	 * @param winner Le nom de la personne qui a gagné.
+	 */
 	public void GameIsWon(String winner)
 	{
 		String message = winner + " a gagné! Voulez vous rejouer?";
@@ -76,6 +90,9 @@ public class View extends JFrame
 	    }
 	}
 
+	/**
+	 * Crée la barre de menu dans le haut de la fenêtre de l'application.
+	 */
 	private void createMenu()
 	{
 		JMenuBar menuBar = new JMenuBar();
@@ -93,7 +110,12 @@ public class View extends JFrame
 
 		this.setJMenuBar(menuBar);
 	}
-
+	
+	/**
+	 *  Cette fonction permet d'initiliser la grille de jeu.
+	 * @param nbRows Le nombre de rangée à mettre dans la grille de jeu
+	 * @param nbColumns Le nombre de colonnes à mettre dans la grille de jeu.
+	 */
 	public void initBoard(int nbRows, int nbColumns)
 	{		
 		this.centerPane.removeAll();
@@ -125,6 +147,9 @@ public class View extends JFrame
 		this.revalidate();
 	}
 
+	/**
+	 * Cette fonction permet d'arranger la grandeur de la fenêtre et sa place dans l'écran.
+	 */
 	private void configureWindow()
 	{
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -135,6 +160,9 @@ public class View extends JFrame
 		setLocation(((screenSize.width - getWidth()) / 2), ((screenSize.height - getHeight()) / 2));
 	}
 
+	/**
+	 *Cette classe est l'écouteur d'événement pour les boutons qui placent les jetons dans la grille de jeu.
+	 */
 	private class ButtonHandler implements ActionListener
 	{
 		private final int columnIndex;
@@ -152,7 +180,9 @@ public class View extends JFrame
 			controller.add(columnIndex);
 		}
 	}
-
+	/**
+	 * Cette classe gère les événements du bouton reset
+	 */
 	private class ResetActionHandler implements ActionListener
 	{
 		@Override
@@ -162,7 +192,9 @@ public class View extends JFrame
 			System.out.println("Action on menu");
 		}
 	}
-
+/**
+ * Cette classe gère les événements du bouton reset.
+ */
 	private class AboutActionHandler implements ActionListener
 	{
 		@Override
@@ -172,7 +204,9 @@ public class View extends JFrame
 		}
 	}
 
-	
+	/**
+	 * Fonction qui demande à l'utilisateur les informations concernants les colonnes, les rangées et le nombre de jeton pour gagner.
+	 */
 	private void askDimension()
 	{
 		String input = JOptionPane.showInputDialog("Nombre de rangées");
@@ -216,7 +250,12 @@ public class View extends JFrame
 			e.printStackTrace();
 		}
 	}
-
+/**
+ * Cette fonction est appeler pour placer un jeton sur la grille de jeu. 
+ * @param i Position X du jeton
+ * @param j Position Y du jeton
+ * @param isPlayer1 Vérifie si c'est le 1er joueur ou le second pour savoir quel image afficher.
+ */
 	public void UpdateToken(int i, int j, boolean isPlayer1) 
 	{
 		if(isPlayer1)
